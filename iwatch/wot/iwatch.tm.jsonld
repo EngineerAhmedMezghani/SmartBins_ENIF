@@ -1,0 +1,118 @@
+{
+  "@context": [
+    "https://www.w3.org/2022/wot/td/v1.1"
+  ],
+  "@type": [
+    "tm:ThingModel"
+  ],
+  "title": "SmartWasteBin",
+  "description": "Digital Twin model of a smart waste bin with environmental sensors.",
+  "version": {
+    "model": "1.0.0",
+    "instance": "1.0.0"
+  },
+  "links": [
+    {
+      "rel": "tm:ThingModel",
+      "href": "http://192.168.177.1:8000/iwatch.tm.jsonld",
+      "type": "application/tm+json",
+      "instanceName": "SmartWasteBin"
+    }
+  ],
+  "tm:optional": [],
+  "properties": {
+  "bins": {
+    "title": "Smart Bins",
+    "description": "Collection of smart waste bins",
+    "type": "object",
+    "patternProperties": {
+      "^BIN_[0-9]+$": {
+        "type": "object",
+        "properties": {
+
+          "bin_id": {
+            "type": "string",
+            "observable": true
+          },
+
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "observable": true
+          },
+
+          "fill_level": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "observable": true
+          },
+
+          "gas_level": {
+            "type": "number",
+            "observable": true
+          },
+
+          "temperature": {
+            "type": "number",
+            "observable": true
+          },
+
+          "humidity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "observable": true
+          },
+
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "observable": true
+          },
+
+          "location": {
+            "type": "object",
+            "properties": {
+              "latitude": { "type": "number" },
+              "longitude": { "type": "number" }
+            }
+          },
+
+          "result": {
+            "type": "object",
+            "observable": false
+          }
+
+        }
+      }
+    }
+  }
+},
+
+  "messages": {
+    "my-message": {
+      "title": "Custom Command from Ditto",
+      "description": "Send a command from Ditto to the bin system",
+      "payload": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["message"]
+      }
+    }
+  },
+
+  "events": {},
+
+  "security": "basic_sc",
+
+  "securityDefinitions": {
+    "basic_sc": {
+      "scheme": "basic"
+    }
+  }
+}
